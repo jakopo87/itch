@@ -21,9 +21,11 @@ import {
   SortsAndFilters,
 } from "renderer/pages/common/SortsAndFilters";
 import StandardMainAction from "renderer/pages/common/StandardMainAction";
+import RemoveFromCollectionAction from "renderer/pages/common/RemoveFromCollectionAction";
 import { MeatProps } from "renderer/scenes/HubScene/Meats/types";
 import makeGameSeries from "renderer/series/GameSeries";
 import { _ } from "renderer/t";
+import { element } from "prop-types";
 
 const FetchCollection = butlerCaller(messages.FetchCollection);
 const CollectionGameSeries = makeGameSeries(messages.FetchCollectionGames);
@@ -76,7 +78,13 @@ class CollectionPage extends React.PureComponent<Props> {
 
   getRecord = CollectionGameSeries.getRecordCallback(cg => cg.game);
   renderItemExtras = CollectionGameSeries.renderItemExtrasCallback(cave => (
-    <StandardMainAction game={cave.game} />
+    <>
+      <StandardMainAction game={cave.game} />
+      <RemoveFromCollectionAction
+        gameId={cave.game.id}
+        collectionId={cave.collectionId}
+      />
+    </>
   ));
   renderMainFilters = () => (
     <>
